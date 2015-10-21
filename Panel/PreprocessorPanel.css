@@ -1,0 +1,113 @@
+/* Copyright 2013 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. E23237*/
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, Sans-Serif;
+    overflow: hidden;
+    transition: all .2s ease;
+}
+body.dark{
+    background: #073642;
+    color: #2AA198;
+}
+body.light{
+    background: #EEEEEE;
+    color: #444444;
+}
+.container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.counter, .no-angular{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-weight: bold;
+}
+.counter{
+    font-size: 80px;
+}
+.diff-container{
+    font-size: 30px;
+}
+.diff-counter-offset.minus{
+    /*color: #2AA198;*/
+}
+.diff-counter-offset.plus{
+    color: #DC322F;
+}
+.no-angular{
+    font-size: 60px;
+}
+
+.options{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 999;
+    margin: 20px;
+}
+
+.tgl {
+    display: none;
+}
+.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn {
+    box-sizing: border-box;
+}
+.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-btn::selection {
+    background: none;
+}
+.tgl + .tgl-btn {
+    outline: 0;
+    display: block;
+    width: 4em;
+    height: 2em;
+    position: relative;
+    cursor: pointer;
+}
+.tgl + .tgl-btn:after, .tgl + .tgl-btn:before {
+    position: relative;
+    display: block;
+    content: "";
+    width: 50%;
+    height: 100%;
+}
+.tgl + .tgl-btn:after {
+    left: 0;
+}
+.tgl + .tgl-btn:before {
+    display: none;
+}
+.tgl:checked + .tgl-btn:after {
+    left: 50%;
+}
+
+.tgl-flat + .tgl-btn {
+    padding: 2px;
+    transition: all .2s ease;
+    background: #EEEEEE;
+    border: 4px solid #cccccc;
+    border-radius: 2em;
+}
+.tgl-flat + .tgl-btn:after {
+    transition: all .2s ease;
+    background: #cccccc;
+    content: "";
+    border-radius: 1em;
+}
+.tgl-flat:checked + .tgl-btn {
+    border: 4px solid #073642;
+}
+.tgl-flat:checked + .tgl-btn:after {
+    left: 50%;
+    background: #073642;
+}

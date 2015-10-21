@@ -1,0 +1,25 @@
+<html>
+<head>
+    <link rel='stylesheet' href='PreprocessorPanel.css'>
+    <link rel='stylesheet' href='odometer-theme-minimal.css'>
+</head>
+<body class="dark">
+    <div class='options'>
+        <input id="cb-theme" class="tgl tgl-flat" type="checkbox">
+        <label class="tgl-btn" for="cb-theme"></label>
+    </div>
+    <div class='container'>
+        <div class='no-angular' style="display: none">Angular not found</div>
+        <div class='counter'>
+            <span class="odometer"></span>
+            <div class="diff-container">
+                <span>diff:</span>
+                <span class='diff-counter-offset'></span><span class='diff-counter'></span>
+            </div>
+        </div>
+    </div>
+    <script src="odometer.min.js"></script>
+    <script src="InspectedWindowLoadMonitor.js"></script>
+    <script src="PreprocessorPanel.js"></script>
+</body>
+</html>
