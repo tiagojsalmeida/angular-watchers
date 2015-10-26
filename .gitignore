@@ -1,0 +1,7 @@
+.tmp
+.idea
+.editorconfig
+.DS_Store
+nbproject/
+.fuse_*
+!.gitkeep

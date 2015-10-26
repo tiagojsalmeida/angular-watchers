@@ -5,20 +5,38 @@
 </head>
 <body class="dark">
     <div class='options'>
-        <input id="cb-theme" class="tgl tgl-flat" type="checkbox">
-        <label class="tgl-btn" for="cb-theme"></label>
+        <span class="frame-options dropdown">
+           <select id="frameSelector">
+               <!--<option selected value="top">Top Frame</option>-->
+           </select>
+        </span>
+        <span class="theme-options">
+            <input id="cb-theme" class="tgl tgl-flat theme" type="checkbox">
+            <label class="tgl-btn theme" for="cb-theme"></label>
+        </span>
+        <span class="graph-options">
+            <input id="cb-graph" class="tgl tgl-flat graph" type="checkbox">
+            <label class="graph-btn graph" for="cb-graph"></label>
+        </span>
     </div>
     <div class='container'>
-        <div class='no-angular' style="display: none">Angular not found</div>
-        <div class='counter'>
+        <div class='no-angular'>
+            <h1>Angular not found</h1>
+            <span>If you do have Angular make sure you have <a href="https://docs.angularjs.org/api/ng/provider/$logProvider" target="_blank">debug enabled</a>.</span>
+        </div>
+        <div class='counter-container'>
             <span class="odometer"></span>
             <div class="diff-container">
-                <span>diff:</span>
+                <span>Diff:</span>
                 <span class='diff-counter-offset'></span><span class='diff-counter'></span>
             </div>
         </div>
+        <div class='graph-container'>
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
     <script src="odometer.min.js"></script>
+    <script src="Chart.min.js"></script>
     <script src="InspectedWindowLoadMonitor.js"></script>
     <script src="PreprocessorPanel.js"></script>
 </body>
