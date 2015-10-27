@@ -6,7 +6,7 @@
             for (var i = 0; i < frames.length; ++i)
             {
                 framesObj.push({
-                    name: frames[i].id,
+                    name: frames[i].id || frames[i].name,
                     url: frames[i].src
                 });
             }
@@ -180,7 +180,7 @@
             document.querySelector('.diff-counter-offset').className = (diff < 0) ? 'diff-counter-offset minus' : 'diff-counter-offset plus';
             document.querySelector('.diff-counter').innerText = Math.abs(diff);
             if(window.lineChart){
-                window.lineChart.addData([count], +(new Date));
+                window.lineChart.addData([~~count], +(new Date));
                 if(window.lineChart.datasets[0].points.length > 25){
                     window.lineChart.removeData();
                 }

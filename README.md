@@ -8,8 +8,9 @@ This is perfect to debug any performance issues.
 * Difference from the last total number of watchers
 * Visual graph that plots the number of watchers in time (max 25 plots)
 * Choose Iframe where you want to count the watchers
-* Expose Angular Modules in a global variable $$am
-* Dark/Light theme color
+* Expose Angular Modules in a global variable **window.$$am**
+* Graph/Counter view toggle
+* Dark/Light theme toggle
 
 ![](http://g.recordit.co/QEZYcIN6Kb.gif)
 
