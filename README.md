@@ -1,6 +1,6 @@
 # Angular Watchers
 **Angular watchers** is the ultimate AngularJS tool which tells you how many active watchers you currently have.
-It automatically updates so you can see live how many watcher a action or a page has.
+It automatically updates so you can see live how many watcher a page have.
 This is perfect to debug any performance issues.
 
 ## Features
@@ -12,7 +12,7 @@ This is perfect to debug any performance issues.
 * Graph/Counter view toggle
 * Dark/Light theme toggle
 
-![](http://g.recordit.co/QEZYcIN6Kb.gif)
+![](https://github.com/tiagojsalmeida/angular-watchers/blob/master/Panel/test-case.gif)
 
 ## How to use
 * Install the [Chrome extension](https://chrome.google.com/webstore/detail/angular-watchers/nlmjblobloedpmkmmckeehnbfalnjnjk)
@@ -36,7 +36,7 @@ We also expose all the available angular modules and their services on a **windo
 
 ## Credits
 
-Developed by the [Tiago Almeida](https://github.com/tiagojsalmeida) and [Giulio Dellorbo](https://github.com/egm0121).
+Developed by the [Tiago Almeida](https://github.com/tiagojsalmeida), [Giulio Dellorbo](https://github.com/egm0121) and [Firmino Alves](https://github.com/firminoalves).
 
 ## License
 The MIT License (MIT)
