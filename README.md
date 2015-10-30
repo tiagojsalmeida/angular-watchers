@@ -12,9 +12,11 @@ This is perfect to debug any performance issues.
 * Graph/Counter view toggle
 * Dark/Light theme toggle
 
-![](https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/test-case.gif)
-![](https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/1.jpg)
-![](https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/2.jpg)
+<p align="center">
+  <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/test-case.gif"/>
+  <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/1.jpg"/>
+  <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/2.jpg"/>
+</p>
 
 ## How to use
 * Install the [Chrome extension](https://chrome.google.com/webstore/detail/angular-watchers/nlmjblobloedpmkmmckeehnbfalnjnjk)
