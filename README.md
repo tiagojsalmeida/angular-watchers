@@ -14,8 +14,8 @@ This is perfect to debug any performance issues.
 
 <p align="center">
   <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/test-case.gif"/>
-  <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/1.jpg"/>
-  <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/2.jpg"/>
+  <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/Console_01.png"/>
+  <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/Console_02.png"/>
 </p>
 
 ## How to use
