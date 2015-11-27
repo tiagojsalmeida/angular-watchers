@@ -109,7 +109,7 @@
         clearInterval(window.injectAngularModulesInterval);
         window.injectAngularModulesInterval = setInterval(function(){
             var options = window.selectedFrame != 'top' ? {'frameURL': window.selectedFrame} : {};
-            chrome.devtools && chrome.devtools.inspectedWindow.eval("("+injectAngularModules.toString()+")(" + enableServicesHelper.toString() + ")", options);
+            chrome.devtools && chrome.devtools.inspectedWindow.eval("("+injectAngularModules.toString()+")(" + enableModulesHelper.toString() + ")", options);
         }, 2000);
     }
 
@@ -154,7 +154,7 @@
     }
 
     var showConfiguration = false,
-        enableServicesHelper = false,
+        enableModulesHelper = false,
         toggle = {
             configuration: function() {
                 showConfiguration = !showConfiguration;
@@ -175,10 +175,10 @@
                 this.selected( 'graph', toggle );
                 window.localStorage.setItem('graph', toggle );
             },
-            services: function( toggle ) {
-                enableServicesHelper = toggle === 'true' ? true : false;
-                this.selected( 'services', enableServicesHelper );
-                window.localStorage.setItem('services', enableServicesHelper );
+            modules: function( toggle ) {
+                enableModulesHelper = toggle === 'true' ? true : false;
+                this.selected( 'modules', enableModulesHelper );
+                window.localStorage.setItem('modules', enableModulesHelper );
             },
             selected: function( namespace, value ){
                 document.querySelectorAll('[data-click="' + namespace + '"]').forEach(function(elm) {
@@ -266,7 +266,7 @@
             try {
                 toggle.theme(window.localStorage.getItem('theme'));
                 toggle.graph(window.localStorage.getItem('graph'));
-                toggle.services(window.localStorage.getItem('services'));
+                toggle.modules(window.localStorage.getItem('modules'));
             } catch (e){}
         }
     }

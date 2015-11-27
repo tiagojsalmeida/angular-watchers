@@ -93,8 +93,8 @@ body.light .configuration-toggle .configuration-icon svg path{
 	fill: #2AA198 !important;
 }
 .configuration-toggle .configuration-icon {
-	width: 35px;
-	height: 35px;
+	width: 25px;
+	height: 25px;
 	cursor: pointer;
 }
 .frame-options{

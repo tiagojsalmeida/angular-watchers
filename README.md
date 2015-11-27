@@ -16,6 +16,7 @@ This is perfect to debug any performance issues.
   <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/test-case.gif"/>
   <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/Console_01.png"/>
   <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/Console_02.png"/>
+  <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/Console_03.png"/>
 </p>
 
 ## How to use
@@ -36,8 +37,11 @@ Every 500ms we inject a angular watchers counter and show you that result.
 
 If your page has Iframes you can choose the one you want to target in a dropdown and we will counter the watchers on the given Iframe.
 
-We also expose all the available angular modules and their services on a **window.$$am** variable. This is a usefull shortcut to debug angular services without a need to use *injector().get()* everytime.
+We also expose all the available angular modules and their services on a **window.$$am** variable. This is a usefull shortcut to debug angular services without a need to use *injector().get()* everytime. 
 
+
+**Note**: This setting if disabled by default.
+Enable it on the configuration menu but be aware that it will **initialize every injected services** the module got.
 ## Credits
 
 Developed by the [Tiago Almeida](https://github.com/tiagojsalmeida), [Giulio Dellorbo](https://github.com/egm0121) and [Firmino Alves](https://github.com/firminoalves).
