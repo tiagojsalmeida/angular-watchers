@@ -1,4 +1,7 @@
 (function() {
+    //little pollyfil
+    NodeList.prototype.forEach = Array.prototype.forEach;
+
     function initFramesDropdown() {
         var injectFramesCounter = function (){
             var framesObj = [],
@@ -59,7 +62,7 @@
 
     function initAngularModules(){
 
-        var injectAngularModules = function(){
+        var injectAngularModules = function( enabled ){
             if(!('angular' in window)) return false;
 
             var  r = {};
@@ -101,12 +104,12 @@
                 return r;
             };
 
-            window.$$am = AngularModules( window.document.querySelector('[ng-app]').getAttribute('ng-app') );
+            window.$$am = enabled && AngularModules( window.document.querySelector('[ng-app]').getAttribute('ng-app') );
         }
         clearInterval(window.injectAngularModulesInterval);
         window.injectAngularModulesInterval = setInterval(function(){
             var options = window.selectedFrame != 'top' ? {'frameURL': window.selectedFrame} : {};
-            chrome.devtools && chrome.devtools.inspectedWindow.eval("("+injectAngularModules.toString()+")()", options);
+            chrome.devtools && chrome.devtools.inspectedWindow.eval("("+injectAngularModules.toString()+")(" + enableServicesHelper.toString() + ")", options);
         }, 2000);
     }
 
@@ -150,25 +153,44 @@
         });
     }
 
-    function toggleTheme( toggle ) {
-        document.querySelector('body').className = toggle ? "light" : "dark";
-        document.querySelector('.tgl.theme').checked = toggle;
-    }
-
-    function toggleGraph( toggle ) {
-        document.querySelector('.counter-container').style.display = (toggle ? 'none' : 'block');
-        document.querySelector('.graph-container').style.display = (toggle ? 'block' : 'none');
-        window.showGraph = toggle;
-        document.querySelector('.tgl.graph').checked = toggle;
-        if(toggle && !window.lineChart) initGraph();
-    }
-
+    var showConfiguration = false,
+        enableServicesHelper = false,
+        toggle = {
+            configuration: function() {
+                showConfiguration = !showConfiguration;
+                document.querySelector('.configuration-container').className = 'configuration-container' + (!showConfiguration ? ' hidden' : '');
+            },
+            theme: function( toggle ) {
+                var theme = !!~["dark", "light"].indexOf(toggle) ? toggle : "dark";
+                document.querySelector('body').className = theme;
+                this.selected( 'theme', theme );
+                window.localStorage.setItem('theme', theme );
+            },
+            graph: function( toggle ) {
+                toggle = toggle === 'true' ? true : false;
+                document.querySelector('.counter-container').style.display = (toggle ? 'none' : 'block');
+                document.querySelector('.graph-container').style.display = (toggle ? 'block' : 'none');
+                window.showGraph = toggle;
+                if(toggle && !window.lineChart) initGraph();
+                this.selected( 'graph', toggle );
+                window.localStorage.setItem('graph', toggle );
+            },
+            services: function( toggle ) {
+                enableServicesHelper = toggle === 'true' ? true : false;
+                this.selected( 'services', enableServicesHelper );
+                window.localStorage.setItem('services', enableServicesHelper );
+            },
+            selected: function( namespace, value ){
+                document.querySelectorAll('[data-click="' + namespace + '"]').forEach(function(elm) {
+                    elm.className = 'option' + ( elm.getAttribute('data-value') == value.toString() ? ' selected' : '');
+                });
+            }
+        }
 
     function angularNotFound(noAngular){
         document.querySelector('.no-angular').style.display = (noAngular ? 'block' : 'none');
         document.querySelector('.counter-container').style.display = (noAngular || window.showGraph ? 'none' : 'block');
         document.querySelector('.graph-container').style.display = (noAngular || !window.showGraph ? 'none' : 'block');
-        document.querySelector('.graph-options').style.display = (noAngular ? 'none' : 'inline-block');
     }
 
     function renderWatchers(count,errors){
@@ -200,11 +222,19 @@
         removeDropdownOptions(frameSelector);
         frameSelector.options[frameSelector.options.length] = new Option('Top frame', 'top', false, (!window.selectedFrame || 'top' === window.selectedFrame));
 
+        var framesUrl = frames.map(function(frame){
+            return frame.url;
+        });
+        //if the selected frame doesnt exist anymore, switch to top frame
+        if( framesUrl.indexOf( window.selectedFrame ) == -1 ){
+            window.selectedFrame = 'top';
+        }
+        
         frames.map(function(frame){
             var parser = document.createElement('a');
             parser.href = frame.url;
             frameSelector.options[frameSelector.options.length] = new Option(
-                frame.name + (parser && parser.hostname ? ' : ' + parser.hostname : ''),
+                frame.name + ( frame.name && parser && parser.hostname ? ' : ' : '') + (parser && parser.hostname || ''),
                 frame.url,
                 false,
                 (window.selectedFrame && frame.url === window.selectedFrame)
@@ -216,9 +246,9 @@
     function loadOptions(){
         window.selectedFrame = 'top'; //initial selected
         document.getElementById('frameSelector').addEventListener("change", function(a,b,c){
-            window.selectedFrame = this.options[this.selectedIndex].value;
+            window.selectedFrame = this.options[this.selectedIndex].value || 'top';
             window.lastCount = false;
-            toggleGraph(false);
+            toggle.graph(false);
             angularNotFound(true);
             window.lineChart && window.lineChart.destroy();
             window.lineChart = false;
@@ -226,29 +256,17 @@
             initAngularModules();
         });
 
-        document.querySelector('.tgl.theme').addEventListener("click", function(e){
-            if (typeof(window.localStorage) != 'undefined' ) {
-                try {
-                    window.localStorage.setItem('theme', e.target.checked);
-                } catch (e){}
-            }
-            toggleTheme(e.target.checked);
-        });
-
-        document.querySelector('.tgl.graph').addEventListener("click", function(e){
-            if (typeof(window.localStorage) != 'undefined' ) {
-                try {
-                    window.localStorage.setItem('graph', e.target.checked);
-                } catch (e){}
-            }
-
-            toggleGraph(e.target.checked);
+        document.querySelectorAll('[data-click]').forEach(function(elm) {
+            elm.addEventListener("click", function(e){
+                toggle[ elm.getAttribute('data-click') ]( elm.getAttribute('data-value') );
+            });
         });
 
         if (typeof(window.localStorage) != 'undefined' ) {
             try {
-                toggleTheme(JSON.parse(window.localStorage.getItem('theme')));
-                toggleGraph(JSON.parse(window.localStorage.getItem('graph')));
+                toggle.theme(window.localStorage.getItem('theme'));
+                toggle.graph(window.localStorage.getItem('graph'));
+                toggle.services(window.localStorage.getItem('services'));
             } catch (e){}
         }
     }

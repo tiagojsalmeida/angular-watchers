@@ -1,6 +1,7 @@
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, Sans-Serif;
     overflow: hidden;
+	position: relative;
     transition: all .2s ease;
 	margin: 0px;
 	padding: 0px;
@@ -10,7 +11,8 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	-o-user-select: none;
-	user-select: none;}
+	user-select: none;
+}
 body.dark{
     background: #073642;
     color: #2AA198;
@@ -71,26 +73,89 @@ body.light a{
     color: #DC322F;
 }
 
-.options{
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 999;
+.configuration-toggle{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	z-index: 999;
+ }
+.configuration-toggle .configuration-icon svg {
 	width: 100%;
+	height: 100%;
 }
-.options > span{
-	margin: 20px;
-	margin-bottom: 0px;
+body.dark .configuration-toggle .configuration-icon svg path{
+	fill: #eee;
 }
-.options .frame-options{
+body.light .configuration-toggle .configuration-icon svg path{
+	fill: #444;
+}
+.configuration-toggle .configuration-icon:hover svg path{
+	fill: #2AA198 !important;
+}
+.configuration-toggle .configuration-icon {
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.frame-options{
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	z-index: 1;
 	display: none; /* Hide it initially */
-	float: left;
 }
-.options .graph-options, .options .theme-options{
-	float: right;
-	margin-left: 0px;
+.configuration-container{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 998;
+	background: #073642;
+	padding-top: 80px;
+	padding-left: 20px;
+	opacity: 0.8;
+	transition: z-index 0.5s, opacity 0.5s linear;
 }
-.options .graph-options{
+.hidden {
+	opacity: 0;
+	z-index: 0;
+}
+body.dark .configuration-container{
+	background: #073642;
+	color: #2AA198;
+}
+body.light .configuration-container{
+	background: #EEEEEE;
+	color: #444444;
+}
+.configuration-container .options-container{
+	line-height: 1.5em;
+	margin-bottom: 2em;
+}
+.configuration-container .option-title{
+	width: 200px;
+	display: inline-block;
+	font-size: 1.5em;
+}
+.configuration-container .option-helper{
+	width: 200px;
+	font-size: 0.7em;
+	line-height: 1em;
+	margin-top: 10px;
+}
+.configuration-container .options-wrapper .option{
+	display: inline-block;
+	width: 50px;
+	text-align: center;
+	padding-left: 20px;
+	font-weight: 100;
+	cursor: pointer;
+}
+.configuration-container .options-wrapper .option.selected{
+	font-weight: bolder;
+}
+.configuration-container .graph-options{
 	margin-right: 10px;
 }
 /*
@@ -201,8 +266,6 @@ body.light .tgl-flat:checked + .graph-btn {
  */
 
 .dropdown {
-	position: relative;
-	display: inline-block;
 	vertical-align: top;
 }
 .dropdown select {
