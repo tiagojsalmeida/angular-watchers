@@ -49,7 +49,7 @@
                 watchCount+= getWatchCount(scope.$$nextSibling, scopeHash);
 
                 return watchCount;
-            })(angular.element( window.document.querySelector('body') ).scope());
+            })(angular.element( window.document.querySelector('[ng-app]') ).scope());
         };
 
         window.lastCount = 0;
