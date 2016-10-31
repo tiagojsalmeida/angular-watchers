@@ -3,7 +3,7 @@
 
     "name": "Angular watchers",
     "short_name": "$$watchers",
-    "version": "1.4",
+    "version": "1.5",
     "description": "Check how many watchers are active in an angular app",
     "devtools_page": "chrome-preprocessor.html",
     "icons": {

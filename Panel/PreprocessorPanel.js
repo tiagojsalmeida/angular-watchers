@@ -2,6 +2,8 @@
     //little pollyfil
     NodeList.prototype.forEach = Array.prototype.forEach;
 
+    var bootstrappedElement = '';
+
     function initFramesDropdown() {
         var injectFramesCounter = function (){
             var framesObj = [],
@@ -22,8 +24,25 @@
     }
 
     function initAngularWatchers() {
-        var injectAngularWatchers = function (){
+        var injectAngularWatchers = function (bootstrappedElement){
             if(!('angular' in window)) return false;
+            var bootstrapApp = null;
+
+            if (bootstrappedElement) {
+                bootstrapApp = angular.element( window.document.querySelector(bootstrappedElement) ).scope();
+            }
+
+            if (!bootstrapApp){
+                bootstrapApp = angular.element( window.document.querySelector('[ng-app]') ).scope();
+            }
+
+            if (!bootstrapApp){
+                bootstrapApp = angular.element( window.document.querySelector('body') ).scope();
+            }
+
+            if (!bootstrapApp){
+                return false;
+            }
 
             return (function getWatchCount(scope, scopeHash) {
                 // default for scopeHash
@@ -49,14 +68,14 @@
                 watchCount+= getWatchCount(scope.$$nextSibling, scopeHash);
 
                 return watchCount;
-            })(angular.element( window.document.querySelector('[ng-app]') ).scope());
+            })(bootstrapApp);
         };
 
         window.lastCount = 0;
         clearInterval(window.initAngularWatchersInterval);
         window.initAngularWatchersInterval = setInterval(function(){
             var options = window.selectedFrame != 'top' ? {'frameURL': window.selectedFrame} : {};
-            chrome.devtools && chrome.devtools.inspectedWindow.eval("("+injectAngularWatchers.toString()+")()", options, renderWatchers);
+            chrome.devtools && chrome.devtools.inspectedWindow.eval("("+injectAngularWatchers.toString()+")('" + bootstrappedElement + "')", options, renderWatchers);
         }, 500);
     }
 
@@ -105,7 +124,7 @@
             };
 
             window.$$am = enabled && AngularModules( window.document.querySelector('[ng-app]').getAttribute('ng-app') );
-        }
+        };
         clearInterval(window.injectAngularModulesInterval);
         window.injectAngularModulesInterval = setInterval(function(){
             var options = window.selectedFrame != 'top' ? {'frameURL': window.selectedFrame} : {};
@@ -125,7 +144,7 @@
                 pointHighlightStroke: "#2AA198",
                 data: window.lastCount ? [0,window.lastCount] : [0]
             }]
-        }
+        };
 
         Chart.defaults.global.tooltipYPadding = 16;
         Chart.defaults.global.tooltipCornerRadius = 0;
@@ -179,6 +198,11 @@
                 enableModulesHelper = toggle === 'true' ? true : false;
                 this.selected( 'modules', enableModulesHelper );
                 window.localStorage.setItem('modules', enableModulesHelper );
+            },
+            bootstrapElement: function( element ) {
+                document.querySelector('[data-change="bootstrapElement"]').value = element;
+                bootstrappedElement = element;
+                window.localStorage.setItem('bootstrapElement', element );
             },
             selected: function( namespace, value ){
                 document.querySelectorAll('[data-click="' + namespace + '"]').forEach(function(elm) {
@@ -257,8 +281,14 @@
         });
 
         document.querySelectorAll('[data-click]').forEach(function(elm) {
-            elm.addEventListener("click", function(e){
+            elm.addEventListener("click", function(){
                 toggle[ elm.getAttribute('data-click') ]( elm.getAttribute('data-value') );
+            });
+        });
+
+        document.querySelectorAll('[data-change]').forEach(function(elm) {
+            elm.addEventListener("input", function(){
+                toggle[ elm.getAttribute('data-change') ]( elm.value );
             });
         });
 
@@ -267,6 +297,7 @@
                 toggle.theme(window.localStorage.getItem('theme'));
                 toggle.graph(window.localStorage.getItem('graph'));
                 toggle.modules(window.localStorage.getItem('modules'));
+                toggle.bootstrapElement(window.localStorage.getItem('bootstrapElement'));
             } catch (e){}
         }
     }

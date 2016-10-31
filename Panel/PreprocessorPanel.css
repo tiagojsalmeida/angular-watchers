@@ -152,6 +152,13 @@ body.light .configuration-container{
 	font-weight: 100;
 	cursor: pointer;
 }
+.configuration-container .options-wrapper .input-option{
+	display: inline-block;
+	width: 100px;
+	margin-left: 30px;
+	font-weight: 100;
+	outline: none;
+}
 .configuration-container .options-wrapper .option.selected{
 	font-weight: bolder;
 }
