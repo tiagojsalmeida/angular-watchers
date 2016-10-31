@@ -11,6 +11,7 @@ This is perfect to debug any performance issues.
 * Expose Angular Modules in a global variable **window.$$am**
 * Graph/Counter view toggle
 * Dark/Light theme toggle
+* Bootstrapped element input - in case your app is manually bootstrapped
 
 <p align="center">
   <img src="https://github.com/tiagojsalmeida/angular-watchers/blob/master/Screenshots/test-case.gif"/>
